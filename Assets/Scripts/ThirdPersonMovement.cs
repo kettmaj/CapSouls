@@ -7,6 +7,7 @@ public class ThirdPersonMovement : MonoBehaviour {
     //get reference for camera position to orientate to line up
     public OrbitalCamera orbitCam;
     CharacterController pawn;
+    float dodgeCooldown = 0;
 
 	// Use this for initialization
 	void Start () {
@@ -36,4 +37,10 @@ public class ThirdPersonMovement : MonoBehaviour {
 
         pawn.SimpleMove(velocity);
     }
+
+    private void Dodge()
+    {
+        //causes the player to dodge in the direction they are moving
+    }
+
 }
