@@ -3,13 +3,29 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class OrbitalCamera : MonoBehaviour {
-
+    /// <summary>
+    /// how quickly the camera moves horizontally
+    /// </summary>
     public float lookSensitivityX = 5;
+    /// <summary>
+    /// how quickly the camera moves vertially
+    /// </summary>
     public float lookSensitivityY = 5;
+    /// <summary>
+    /// if the horizontal camera movement is inverted
+    /// </summary>
     public bool invertLookX = false;
+    /// <summary>
+    /// if the vertical camera movement is inverted
+    /// </summary>
     public bool invertLookY = false;
-
+    /// <summary>
+    /// the upward and downward direction of the camera
+    /// </summary>
     float pitch = 0;
+    /// <summary>
+    /// the side to side direction of the camera
+    /// </summary>
     float yaw = 0;
 
     // Use this for initialization
@@ -21,7 +37,9 @@ public class OrbitalCamera : MonoBehaviour {
 	void Update () {
         LookAround();
 	}
-
+    /// <summary>
+    /// Allows the player object to look around using either mouse or right thumbstick (xbox controller)
+    /// </summary>
     private void LookAround()
     {
         float lookX = Input.GetAxis("Mouse X") * (invertLookX ? -1 : 1) * lookSensitivityX;
@@ -32,9 +50,12 @@ public class OrbitalCamera : MonoBehaviour {
 
         //transform.Rotate(0, lookX, 0);
 
+        pitch += lookY;
+        pitch = Mathf.Clamp(pitch, 5, 80);
+        yaw += lookX;
+
         pitch += Tv;
         pitch = Mathf.Clamp(pitch, 5, 80);
-
         yaw += Th;
 
         transform.localEulerAngles = new Vector3(pitch, yaw, 0);

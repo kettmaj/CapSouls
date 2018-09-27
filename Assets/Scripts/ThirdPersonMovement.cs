@@ -4,12 +4,29 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class ThirdPersonMovement : MonoBehaviour {
+    /// <summary>
+    /// the player's movement speed (affects final velocity)
+    /// </summary>
     public float speed = 5;
-    //get reference for camera position to orientate to line up
+    /// <summary>
+    /// get reference for camera position to orientate the player to
+    /// </summary>
     public OrbitalCamera orbitCam;
+    /// <summary>
+    /// the player object
+    /// </summary>
     CharacterController pawn;
+    /// <summary>
+    /// how often the player can dodge, depends on the reset called in the dodge function
+    /// </summary>
     float dodgeCooldown = 0;
+    /// <summary>
+    /// contains the distance (new location) for the player object
+    /// </summary>
     Vector3 dodgeDistance = new Vector3(0, 0, 3);
+    /// <summary>
+    /// variable for the LERP used to smooth character dodge movement
+    /// </summary>
     public float smoothFactor = 2;
 
 	// Use this for initialization
