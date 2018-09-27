@@ -1,7 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+/// <summary>
+/// constrains the camera to the target at a set distance
+/// </summary>
 public class FollowTarget : MonoBehaviour {
     /// <summary>
     /// reference to the target (a game object above the player)

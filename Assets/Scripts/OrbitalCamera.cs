@@ -1,14 +1,16 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+/// <summary>
+/// Orbits the camera around the player (in tangent with FollowTarget to keep it a set distance away
+/// </summary>
 public class OrbitalCamera : MonoBehaviour {
     /// <summary>
     /// how quickly the camera moves horizontally
     /// </summary>
     public float lookSensitivityX = 5;
     /// <summary>
-    /// how quickly the camera moves vertially
+    /// how quickly the camera moves vertically
     /// </summary>
     public float lookSensitivityY = 5;
     /// <summary>

@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-
+/// <summary>
+/// moving the player along the X and Z axises in any direction
+/// </summary>
 public class ThirdPersonMovement : MonoBehaviour {
     /// <summary>
     /// the player's movement speed (affects final velocity)
