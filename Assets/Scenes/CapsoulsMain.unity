@@ -211,6 +211,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 5
   orbitCam: {fileID: 1573527581}
+  smoothFactor: 2
 --- !u!23 &353995858
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -591,7 +592,7 @@ MonoBehaviour:
   lookSensitivityX: 5
   lookSensitivityY: 5
   invertLookX: 0
-  invertLookY: 1
+  invertLookY: 0
 --- !u!1 &2004844469
 GameObject:
   m_ObjectHideFlags: 0

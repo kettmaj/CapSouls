@@ -27,7 +27,18 @@ public class ThirdPersonMovement : MonoBehaviour {
             Dodge();
             dodgeCooldown = 0;
         }
+        //b is joystick button 1
 
+        if (Input.GetButtonDown("B Button"))
+        {
+            if(dodgeCooldown <= 0)
+            {
+                Dodge();
+                dodgeCooldown = 0;
+            }
+            
+        }
+        
     }
     /// <summary>
     /// Allows the player object to move in an direction based on axis' set up already by Unity
@@ -36,6 +47,7 @@ public class ThirdPersonMovement : MonoBehaviour {
     {
         float v = Input.GetAxis("Vertical");
         float h = Input.GetAxis("Horizontal");
+
 
         //rotate to orient with camera
         if (v!= 0 || h != 0)
@@ -56,7 +68,7 @@ public class ThirdPersonMovement : MonoBehaviour {
     private void Dodge()
     {
         //causes the player to dodge in the direction they are facing
-        //pawn.transform.position = Vector3.Lerp(pawn.transform.position, pawn.transform.position + dodgeDistance, Time.deltaTime * smoothFactor)
+        pawn.transform.position = Vector3.Lerp(pawn.transform.position, pawn.transform.position + dodgeDistance, Time.deltaTime * smoothFactor);
         pawn.transform.Translate(dodgeDistance);
         print("Dodge");
     }
