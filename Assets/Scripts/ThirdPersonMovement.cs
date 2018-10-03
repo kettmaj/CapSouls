@@ -30,21 +30,33 @@ public class ThirdPersonMovement : MonoBehaviour {
     /// variable for the LERP used to smooth character dodge movement
     /// </summary>
     public float smoothFactor = 2;
-
-	// Use this for initialization
-	void Start () {
+    /// <summary>
+    /// where the player is currently
+    /// </summary>
+    public Vector3 currentPOS;
+    /// <summary>
+    /// where the player will be at the end of their roll
+    /// </summary>
+    public Vector3 newPOS;
+    
+    void Start () {
         pawn = GetComponent<CharacterController>();
+        currentPOS = pawn.transform.position;
+        newPOS = currentPOS;
 	}
 	
-	// Update is called once per frame
 	void Update () {
         MoveAround();
         dodgeCooldown -= Time.deltaTime;
+        if (currentPOS != newPOS)
+        {
+            pawn.transform.position = Vector3.Lerp(currentPOS, newPOS, Time.deltaTime * smoothFactor);
+        }
 
         if (Input.GetKeyDown(KeyCode.LeftShift) && dodgeCooldown <= 0)
         {
             Dodge();
-            dodgeCooldown = 0;
+            dodgeCooldown = 2;
         }
         //b is joystick button 1
 
@@ -53,7 +65,7 @@ public class ThirdPersonMovement : MonoBehaviour {
             if(dodgeCooldown <= 0)
             {
                 Dodge();
-                dodgeCooldown = 0;
+                dodgeCooldown = 2;
             }
             
         }
@@ -86,9 +98,11 @@ public class ThirdPersonMovement : MonoBehaviour {
     /// </summary>
     private void Dodge()
     {
+        currentPOS = pawn.transform.position;
+        newPOS = currentPOS += dodgeDistance;
         //causes the player to dodge in the direction they are facing
-        pawn.transform.position = Vector3.Lerp(pawn.transform.position, pawn.transform.position + dodgeDistance, Time.deltaTime * smoothFactor);
-        pawn.transform.Translate(dodgeDistance);
+        //pawn.transform.position = Vector3.Lerp(pawn.transform.position, pawn.transform.position + dodgeDistance, Time.deltaTime * smoothFactor);
+        //pawn.transform.Translate(dodgeDistance);
         print("Dodge");
     }
 
