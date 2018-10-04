@@ -2,28 +2,30 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerState : MonoBehaviour {
-    
+public abstract class PlayerState {
     /// <summary>
-    /// a new type to hold all the different states the player can be in
+    /// reference to the player class
     /// </summary>
-    public enum CurrentState //playerstate.state
-    {
-        idle,
-        walking,
-        running,
-        dodging,
-        attacking
-    }
-    public CurrentState state;
+    protected ThirdPersonMovement controller;
 
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-        //print(state);
-        //i really don't know here
-	}
+    /// <summary>
+    /// override method for inheritance, virtual to allow for override, abstract to force override
+    /// </summary>
+    abstract public PlayerState Update();
+    /// <summary>
+    /// what the inherited objects do when starting
+    /// </summary>
+    virtual public void OnBegin(ThirdPersonMovement controller)
+    {
+        this.controller = controller;
+    }
+    /// <summary>
+    /// what the inherited objects do when ending
+    /// </summary>
+    virtual public void OnEnd()
+    {
+
+    }
+
+
 }
