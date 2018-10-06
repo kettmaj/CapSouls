@@ -8,9 +8,17 @@ public class StateWalking : PlayerState {
     /// the player's movement speed (affects final velocity)
     /// </summary>
     public float speed = 5;
+    Material mats;
+
+    public override void OnBegin(ThirdPersonMovement controller)
+    {
+        base.OnBegin(controller);
+        mats = controller.GetComponent<Renderer>().material;
+    }
 
     override public PlayerState Update()
     {
+        mats.color = Color.white;
 
         //put behavior here
         MoveAround();
@@ -18,8 +26,8 @@ public class StateWalking : PlayerState {
 
         //put transitions here
         //if transtion condition is true, return new state
-
-        if (Input.GetKeyDown(KeyCode.LeftShift) && controller.dodgeCooldown <= 0)
+        
+        if (Input.GetButtonDown("Space") && controller.dodgeCooldown <= 0)
         {
             return new StateDodging();
         }
@@ -32,6 +40,18 @@ public class StateWalking : PlayerState {
             }
 
         }
+
+        if (Input.GetButtonDown("Sprint"))
+        {
+            return new StateRunning();
+        }
+        //b is joystick button 1
+        if (Input.GetButtonDown("B Button"))
+        {
+            return new StateRunning();
+        }
+        
+       
 
         return null;
     }

@@ -30,6 +30,8 @@ public class StateDodging : PlayerState {
     /// </summary>
     public Vector3 dodgeEnd;
     public float dodgeProgress;
+    Material mats;
+
 
     // Use this for initialization
     public override void OnBegin(ThirdPersonMovement controller)
@@ -37,12 +39,15 @@ public class StateDodging : PlayerState {
         base.OnBegin(controller);
         dodgeStart = controller.transform.position;
         dodgeEnd = dodgeStart + controller.currentVelocity.normalized * dodgeDistance;
+        mats = controller.GetComponent<Renderer>().material;
+
     }
 
     // Update is called once per frame
     override public PlayerState Update()
     {
-        
+        mats.color = Color.green;
+
         //put behavior here
         dodgeProgress = dodgeCurrent / DODGETOTAL;
         controller.pawn.transform.position = Vector3.Lerp(dodgeStart, dodgeEnd, dodgeProgress);
