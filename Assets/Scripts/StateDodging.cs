@@ -1,7 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+/// <summary>
+/// Player is moving a set distance determined on their last movement vector
+/// Transitions
+/// -Back to Walking once the dodge is completed
+/// </summary>
 public class StateDodging : PlayerState {
     /// <summary>
     /// where the player is currently
@@ -11,7 +15,13 @@ public class StateDodging : PlayerState {
     /// where the player will be at the end of their roll
     /// </summary>
     public Vector3 newPOS;
+    /// <summary>
+    /// Tracking how much time has passed since the player started to dodge
+    /// </summary>
     public float dodgeCurrent = 0;
+    /// <summary>
+    /// Total time for the dodge animation to occur
+    /// </summary>
     public const float DODGETOTAL = .5f;
     /// <summary>
     /// the player object
@@ -29,11 +39,16 @@ public class StateDodging : PlayerState {
     /// where the player will be at the end of their roll
     /// </summary>
     public Vector3 dodgeEnd;
+    /// <summary>
+    /// Variable for use in LERP transform, how close the dodgeCurrent is to being equal to DODGETOTAL (from 0 to 1)
+    /// </summary>
     public float dodgeProgress;
+    /// <summary>
+    /// the player's renderer element material
+    /// </summary>
     Material mats;
 
 
-    // Use this for initialization
     public override void OnBegin(ThirdPersonMovement controller)
     {
         base.OnBegin(controller);
@@ -43,7 +58,6 @@ public class StateDodging : PlayerState {
 
     }
 
-    // Update is called once per frame
     override public PlayerState Update()
     {
         mats.color = Color.green;
@@ -57,6 +71,7 @@ public class StateDodging : PlayerState {
 
         if (dodgeCurrent >= DODGETOTAL)
         {
+            controller.dodgeCooldown = 1;
             return new StateWalking();
         }
         dodgeCurrent += Time.deltaTime;
@@ -64,3 +79,4 @@ public class StateDodging : PlayerState {
     }
     
 }
+//Idea, make all combat record hits, and only do damage based on state multiplier (dodge state would be x0 damage)

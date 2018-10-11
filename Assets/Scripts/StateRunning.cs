@@ -1,7 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+/// <summary>
+/// In this state the player can move at a faster speed 
+/// Transitions:
+/// -To Walk by releasing Shift
+/// -To Dodge by pressing Space
+/// </summary>
 public class StateRunning : PlayerState
 {
 
@@ -9,6 +14,9 @@ public class StateRunning : PlayerState
     /// the player's movement speed (affects final velocity)
     /// </summary>
     public float speed = 10;
+    /// <summary>
+    /// the player's renderer element material
+    /// </summary>
     Material mats;
 
     public override void OnBegin(ThirdPersonMovement controller)
@@ -61,6 +69,7 @@ public class StateRunning : PlayerState
 
     /// <summary>
     /// Allows the player object to move in an direction based on axis' set up already by Unity
+    /// using both WASD and the left thumbstick on an Xbox One Controller
     /// </summary>
     private void MoveAround()
     {

@@ -1,7 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+/// <summary>
+/// abstract class to hold inherited methods for other states the player can be in.
+/// </summary>
 public abstract class PlayerState {
     /// <summary>
     /// reference to the player class
