@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 /// <summary>
@@ -7,25 +8,60 @@ using UnityEngine;
 /// -To Walking after attack button is released 
 /// -To Dodging if Space is pressed
 /// </summary>
-public class StateAttacking : PlayerState
-{
+public class StateAttacking : PlayerState {
 
     /// <summary>
     /// the player's renderer element material
     /// </summary>
-    Material mats;
-
+    Material mat;
+    /// <summary>
+    /// reference to the sword arm attached to the player
+    /// </summary>
+    private GameObject sword;
+    private float attackAngle = -20;
+    private float currentAttackAngle = 90;
+    /// <summary>
+    /// the code that runs upon initialization of the state
+    /// </summary>
+    /// <param name="controller"></param>
     public override void OnBegin(ThirdPersonMovement controller)
     {
         base.OnBegin(controller);
-        mats = controller.GetComponent<Renderer>().material;
+        damageMult = 1.1f;
+        mat = controller.GetComponent<Renderer>().material;
+        mat.color = Color.yellow;
+        sword = controller.sword;
+        sword.transform.localEulerAngles = new Vector3(0, currentAttackAngle, 0);
+        sword.SetActive(true);
+        controller.stamina -= 10;
     }
 
-
+    /// <summary>
+    /// everything the player can do during the attack
+    /// </summary>
+    /// <returns></returns>
     public override PlayerState Update()
     {
-        throw new System.NotImplementedException();
-        mats.color = Color.yellow;
+        //behavior
+        if(currentAttackAngle != attackAngle)
+        {
+            currentAttackAngle -= 5;
+        }
+        sword.transform.localEulerAngles = new Vector3(0, currentAttackAngle, 0);
+        Debug.Log(currentAttackAngle);
+        //transitions
+        if (currentAttackAngle == attackAngle)
+        {
+            return new StateWalking();
+        }
+        return null;
+
     }
-    
+    public override void OnEnd()
+    {
+        base.OnEnd();
+        controller.didAction = true;
+        sword.SetActive(false);
+    }
+
 }

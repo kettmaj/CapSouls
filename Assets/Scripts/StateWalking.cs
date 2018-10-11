@@ -16,40 +16,30 @@ public class StateWalking : PlayerState {
     /// <summary>
     /// the player's renderer element material
     /// </summary>
-    Material mats;
-
+    Material mat;
+    /// <summary>
+    /// the code that runs upon initialization of the state
+    /// </summary>
+    /// <param name="controller"></param>
     public override void OnBegin(ThirdPersonMovement controller)
     {
         base.OnBegin(controller);
-        mats = controller.GetComponent<Renderer>().material;
-    }
+        damageMult = 1;
+        mat = controller.GetComponent<Renderer>().material;
+        mat.color = Color.white;
 
+    }
+    /// <summary>
+    /// the things that the player can do while in the walking state
+    /// </summary>
+    /// <returns></returns>
     override public PlayerState Update()
     {
-        mats.color = Color.white;
-
         //put behavior here
         MoveAround();
-
-
         //put transitions here
         //if transtion condition is true, return new state
-        
-        if (Input.GetButtonDown("Space") && controller.dodgeCooldown <= 0)
-        {
-            return new StateDodging();
-        }
-        //b is joystick button 1
-        if (Input.GetButtonDown("B Button"))
-        {
-            if (controller.dodgeCooldown <= 0)
-            {
-                return new StateDodging();
-            }
-
-        }
-
-        if (Input.GetButtonDown("Sprint"))
+        if (Input.GetButtonDown("Dodge"))
         {
             return new StateRunning();
         }
@@ -58,9 +48,11 @@ public class StateWalking : PlayerState {
         {
             return new StateRunning();
         }
-        
-       
-
+        //player clicked left mouse button
+        if (Input.GetMouseButtonDown(0))
+        {
+            return new StateAttacking();
+        }
         return null;
     }
     
@@ -73,7 +65,7 @@ public class StateWalking : PlayerState {
         
         float v = Input.GetAxis("Vertical");
         float h = Input.GetAxis("Horizontal");
-        
+        //get player's forward vetor and align camera to that vector on movement
         if (v != 0 || h != 0)
         {
             float camYaw = controller.orbitCam.transform.localEulerAngles.y;
@@ -81,8 +73,8 @@ public class StateWalking : PlayerState {
         }
 
         controller.currentVelocity = Vector3.zero;
-        controller.currentVelocity += controller.transform.forward * v * speed;
-        controller.currentVelocity += controller.transform.right * h * speed;
+        controller.currentVelocity += controller.transform.forward * v * (speed * 65) * Time.deltaTime;
+        controller.currentVelocity += controller.transform.right * h * (speed * 65) * Time.deltaTime;
 
         controller.pawn.SimpleMove(controller.currentVelocity);
     }

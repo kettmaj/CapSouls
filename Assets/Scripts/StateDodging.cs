@@ -48,35 +48,64 @@ public class StateDodging : PlayerState {
     /// </summary>
     Material mats;
 
-
+    /// <summary>
+    /// the code that runs upon initialization of the state
+    /// </summary>
+    /// <param name="controller"></param>
     public override void OnBegin(ThirdPersonMovement controller)
     {
+        damageMult = 0;
         base.OnBegin(controller);
+        controller.lastAction = 0;
+
         dodgeStart = controller.transform.position;
         dodgeEnd = dodgeStart + controller.currentVelocity.normalized * dodgeDistance;
         mats = controller.GetComponent<Renderer>().material;
+        mats.color = Color.green;
+        controller.stamina -= 20;
 
     }
-
+    /// <summary>
+    /// everything the player does in the duration of the dodge
+    /// in this case, moving a set distance based on player's last forward vector
+    /// </summary>
+    /// <returns></returns>
     override public PlayerState Update()
     {
-        mats.color = Color.green;
 
         //put behavior here
         dodgeProgress = dodgeCurrent / DODGETOTAL;
-        controller.pawn.transform.position = Vector3.Lerp(dodgeStart, dodgeEnd, dodgeProgress);
+        if(controller.stamina > 0)
+        {
+            Dodge();
+        }
 
         //put transitions here
         //if transtion condition is true, return new state
 
         if (dodgeCurrent >= DODGETOTAL)
         {
-            controller.dodgeCooldown = 1;
+            controller.dodgeCooldown = 0.2f;
             return new StateWalking();
         }
         dodgeCurrent += Time.deltaTime;
         return null;
     }
-    
+
+    private void Dodge()
+    {
+        controller.pawn.transform.position = Vector3.Lerp(dodgeStart, dodgeEnd, dodgeProgress);
+    }
+
+    /// <summary>
+    /// what the player should do as they exit this state
+    /// </summary>
+    public override void OnEnd()
+    {
+        base.OnEnd();
+        controller.didAction = true;
+
+    }
+
 }
 //Idea, make all combat record hits, and only do damage based on state multiplier (dodge state would be x0 damage)

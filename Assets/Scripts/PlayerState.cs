@@ -9,6 +9,10 @@ public abstract class PlayerState {
     /// reference to the player class
     /// </summary>
     protected ThirdPersonMovement controller;
+    /// <summary>
+    /// the damage that the player takes depending on what state they are in
+    /// </summary>
+    public float damageMult = 1;
 
     /// <summary>
     /// override method for inheritance, virtual to allow for override, abstract to force override

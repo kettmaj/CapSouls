@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 /// <summary>
-/// moving the player along the X and Z axises in any direction
+/// Keeping track of the player's current state and allosw for camera movement. Keeps track of the player's stats
 /// </summary>
 public class ThirdPersonMovement : MonoBehaviour {
     
@@ -28,17 +29,34 @@ public class ThirdPersonMovement : MonoBehaviour {
     /// </summary>
     public float stamina = 100;
     /// <summary>
+    /// the player's maximum heath, reduced by taking damage and restored by health potions
+    /// </summary>
+    public float Health = 100;
+    /// <summary>
     /// the time that needs to pass until the player's stamina begins to regenerate
     /// </summary>
-    private const float STAMINACOOLDOWN = 1.2f;
+    private const float STAMINACOOLDOWN = 1.5f;
     /// <summary>
     /// how much time has passed since the last stamina-consuming action (to a maximum of 2 as to not have an infinitely tracking variable
     /// </summary>
-    private float lastAction = 0;
+    public float lastAction = 0;
     /// <summary>
     /// abstract player state for state machine
     /// </summary>
     private PlayerState state;
+    /// <summary>
+    /// boolean tracking if the player did a stamina-consuming action
+    /// </summary>
+    public bool didAction = false;
+    /// <summary>
+    /// tracking how much current stamina the player has versus maximum stamina
+    /// </summary>
+    private Vector3 staminaPercentage;
+    /// <summary>
+    /// stamina bar UI element
+    /// </summary>
+    public Image StaminaBar;
+    public GameObject sword;
 
 
     void Start () {
@@ -48,19 +66,39 @@ public class ThirdPersonMovement : MonoBehaviour {
 	}
 	
 	void Update () {
-        
+        staminaPercentage = new Vector3(stamina/100, 1, 1);
+        StaminaBar.rectTransform.localScale = staminaPercentage;
+        stamina = Mathf.Clamp(stamina, 0, 100);
+
         if (state != null)
         {
             PlayerState newState = state.Update();
 
             SwitchPlayerState(newState);
         }
-        
+        if (stamina < 100)
+        {
+            StaminaRegen();
+        }
         dodgeCooldown -= Time.deltaTime;
-        
-        
-        
+        if(didAction == true) lastAction += Time.deltaTime;
+
     }
+    private void StaminaRegen()
+    {
+        if(lastAction >= STAMINACOOLDOWN )
+        {
+                stamina += 0.2f;
+                didAction = false;
+
+        }
+        if (stamina >= 100)
+        {
+            lastAction = 0;
+
+        }
+    }
+
     /// <summary>
     /// Changing between current player state and what is passed in
     /// if null passed in, player remains in current state
