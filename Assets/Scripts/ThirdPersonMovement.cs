@@ -52,10 +52,12 @@ public class ThirdPersonMovement : MonoBehaviour {
     /// tracking how much current stamina the player has versus maximum stamina
     /// </summary>
     private Vector3 staminaPercentage;
+    private Vector3 healthPercentage;
     /// <summary>
     /// stamina bar UI element
     /// </summary>
     public Image StaminaBar;
+    public Image HPBar;
     public GameObject sword;
 
 
@@ -69,6 +71,9 @@ public class ThirdPersonMovement : MonoBehaviour {
         staminaPercentage = new Vector3(stamina/100, 1, 1);
         StaminaBar.rectTransform.localScale = staminaPercentage;
         stamina = Mathf.Clamp(stamina, 0, 100);
+        healthPercentage = new Vector3(Health / 100, 1, 1);
+        HPBar.rectTransform.localScale = healthPercentage;
+        Health = Mathf.Clamp(Health, 0, 100);
 
         if (state != null)
         {
