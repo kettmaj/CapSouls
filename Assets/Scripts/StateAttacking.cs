@@ -40,6 +40,7 @@ public class StateAttacking : PlayerState {
         sword = controller.sword;
         sword.transform.localEulerAngles = new Vector3(0, currentAttackAngle, 0);
         sword.SetActive(true);
+        controller.lastAction = 0;
         controller.stamina -= 10;
     }
 
@@ -55,6 +56,7 @@ public class StateAttacking : PlayerState {
             currentAttackAngle -= 5;
         }
         sword.transform.localEulerAngles = new Vector3(0, currentAttackAngle, 0);
+        
         
         //transitions
         if (currentAttackAngle == attackAngle)

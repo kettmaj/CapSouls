@@ -57,8 +57,18 @@ public class ThirdPersonMovement : MonoBehaviour {
     /// stamina bar UI element
     /// </summary>
     public Image StaminaBar;
+    /// <summary>
+    /// refence to the Health bar UI element
+    /// </summary>
     public Image HPBar;
+    /// <summary>
+    /// refence to the sword box attached to the player object
+    /// </summary>
     public GameObject sword;
+    /// <summary>
+    /// refence to the shield box attached to the player object
+    /// </summary>
+    public GameObject shield;
 
 
     void Start () {
@@ -94,7 +104,7 @@ public class ThirdPersonMovement : MonoBehaviour {
         if(lastAction >= STAMINACOOLDOWN )
         {
                 stamina += 0.2f;
-                didAction = false;
+            didAction = false;
 
         }
         if (stamina >= 100)

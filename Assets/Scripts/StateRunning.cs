@@ -26,6 +26,10 @@ public class StateRunning : PlayerState
     /// </summary>
     Material mat;
     /// <summary>
+    /// reference to the Shield attached to the player
+    /// </summary>
+    private GameObject shield;
+    /// <summary>
     /// the code that runs upon initialization of the state
     /// </summary>
     /// <param name="controller"></param>
@@ -36,6 +40,8 @@ public class StateRunning : PlayerState
         mat = controller.GetComponent<Renderer>().material;
         mat.color = Color.blue;
         controller.lastAction = 0;
+        shield = controller.shield;
+
 
     }
     /// <summary>
@@ -46,6 +52,20 @@ public class StateRunning : PlayerState
     {
         //put behavior here
         controller.stamina -= 0.4f;
+
+        //blocking
+        if (Input.GetButtonDown("Fire2"))
+        {
+            shield.SetActive(true);
+            mat.color = Color.cyan;
+
+        }
+        if (Input.GetButtonUp("Fire2"))
+        {
+            shield.SetActive(false);
+            mat.color = Color.white;
+
+        }
         timeinState += Time.deltaTime;
         if(controller.stamina > 0)
         {
@@ -60,7 +80,7 @@ public class StateRunning : PlayerState
 
         //put transitions here
         //if transtion condition is true, return new state
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetButtonDown("Fire1"))
         {
             return new StateAttacking();
         }

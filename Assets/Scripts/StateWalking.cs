@@ -18,6 +18,10 @@ public class StateWalking : PlayerState {
     /// </summary>
     Material mat;
     /// <summary>
+    /// reference to the Shield attached to the player
+    /// </summary>
+    private GameObject shield;
+    /// <summary>
     /// the code that runs upon initialization of the state
     /// </summary>
     /// <param name="controller"></param>
@@ -27,7 +31,7 @@ public class StateWalking : PlayerState {
         damageMult = 1;
         mat = controller.GetComponent<Renderer>().material;
         mat.color = Color.white;
-
+        shield = controller.shield;
     }
     /// <summary>
     /// the things that the player can do while in the walking state
@@ -37,6 +41,21 @@ public class StateWalking : PlayerState {
     {
         //put behavior here
         MoveAround();
+
+        //blocking
+        if (Input.GetButtonDown("Fire2"))
+        {
+            shield.SetActive(true);
+            mat.color = Color.cyan;
+
+        }
+        if (Input.GetButtonUp("Fire2"))
+        {
+            shield.SetActive(false);
+            mat.color = Color.white;
+
+        }
+
         //put transitions here
         //if transtion condition is true, return new state
         if (Input.GetButtonDown("Dodge"))
@@ -49,7 +68,7 @@ public class StateWalking : PlayerState {
             return new StateRunning();
         }
         //player clicked left mouse button
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetButtonDown("Fire1"))
         {
             return new StateAttacking();
         }
