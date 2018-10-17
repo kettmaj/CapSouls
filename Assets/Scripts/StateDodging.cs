@@ -91,7 +91,9 @@ public class StateDodging : PlayerState {
         dodgeCurrent += Time.deltaTime;
         return null;
     }
-
+    /// <summary>
+    /// moves the player a set distance based on their last forward vector
+    /// </summary>
     private void Dodge()
     {
         controller.pawn.transform.position = Vector3.Lerp(dodgeStart, dodgeEnd, dodgeProgress);

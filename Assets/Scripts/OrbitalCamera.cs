@@ -30,12 +30,11 @@ public class OrbitalCamera : MonoBehaviour {
     /// </summary>
     float yaw = 0;
 
-    // Use this for initialization
-    void Start () {
-		
-	}
+    
 	
-	// Update is called once per frame
+	/// <summary>
+    /// everything the camera should do every frame
+    /// </summary>
 	void Update () {
         LookAround();
 	}

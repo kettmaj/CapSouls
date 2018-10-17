@@ -49,9 +49,12 @@ public class ThirdPersonMovement : MonoBehaviour {
     /// </summary>
     public bool didAction = false;
     /// <summary>
-    /// tracking how much current stamina the player has versus maximum stamina
+    /// tracking how much current stamina the player has versus maximum stamina. Used to scale the UI stamina bar
     /// </summary>
     private Vector3 staminaPercentage;
+    /// <summary>
+    /// how much health the player has versus their maximum health. Used to scale the  UI health bar
+    /// </summary>
     private Vector3 healthPercentage;
     /// <summary>
     /// stamina bar UI element
@@ -70,13 +73,17 @@ public class ThirdPersonMovement : MonoBehaviour {
     /// </summary>
     public GameObject shield;
 
-
+    /// <summary>
+    /// Initialization of the player object
+    /// </summary>
     void Start () {
         state = new StateWalking();
         pawn = GetComponent<CharacterController>();
         SwitchPlayerState(new StateWalking());
 	}
-	
+	/// <summary>
+    /// updates the player should make every frame
+    /// </summary>
 	void Update () {
         staminaPercentage = new Vector3(stamina/100, 1, 1);
         StaminaBar.rectTransform.localScale = staminaPercentage;
@@ -99,6 +106,9 @@ public class ThirdPersonMovement : MonoBehaviour {
         if(didAction == true) lastAction += Time.deltaTime;
 
     }
+    /// <summary>
+    /// regenerate player stamina if the player's stamina is below maximum and a minimum time has passed since the last stamina-consuming action
+    /// </summary>
     private void StaminaRegen()
     {
         if(lastAction >= STAMINACOOLDOWN )

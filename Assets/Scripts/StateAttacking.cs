@@ -66,6 +66,9 @@ public class StateAttacking : PlayerState {
         return null;
 
     }
+    /// <summary>
+    /// what should happen as the player exits the attacking state
+    /// </summary>
     public override void OnEnd()
     {
         base.OnEnd();

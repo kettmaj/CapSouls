@@ -14,11 +14,11 @@ public class FollowTarget : MonoBehaviour {
     /// </summary>
     public float easeMultiplier = 10;
 
-    // Use this for initialization
-    void Start () {
-    }
+    
 	
-	// Update is called once per frame
+	/// <summary>
+    /// things the camera should do each time
+    /// </summary>
 	void Update () {
 		if(target)
         {
