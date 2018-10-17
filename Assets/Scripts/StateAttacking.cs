@@ -18,7 +18,13 @@ public class StateAttacking : PlayerState {
     /// reference to the sword arm attached to the player
     /// </summary>
     private GameObject sword;
+    /// <summary>
+    /// the angle the sword needs to end at
+    /// </summary>
     private float attackAngle = -20;
+    /// <summary>
+    /// the angle the sword starts at
+    /// </summary>
     private float currentAttackAngle = 90;
     /// <summary>
     /// the code that runs upon initialization of the state
@@ -26,6 +32,7 @@ public class StateAttacking : PlayerState {
     /// <param name="controller"></param>
     public override void OnBegin(ThirdPersonMovement controller)
     {
+
         base.OnBegin(controller);
         damageMult = 1.1f;
         mat = controller.GetComponent<Renderer>().material;
@@ -48,7 +55,7 @@ public class StateAttacking : PlayerState {
             currentAttackAngle -= 5;
         }
         sword.transform.localEulerAngles = new Vector3(0, currentAttackAngle, 0);
-        Debug.Log(currentAttackAngle);
+        
         //transitions
         if (currentAttackAngle == attackAngle)
         {

@@ -2,17 +2,19 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Damageable : MonoBehaviour {
-    public BoxCollider otherObject;
-    private BoxCollider thisObject;
+public class EnemyScript : MonoBehaviour {
+
+    public float EnemyHP = 20;
 	// Use this for initialization
 	void Start () {
-        
-
+		
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		
+		if(EnemyHP <= 0)
+        {
+            Destroy(this.gameObject);
+        }
 	}
 }

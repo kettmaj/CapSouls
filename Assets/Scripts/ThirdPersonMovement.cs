@@ -117,10 +117,11 @@ public class ThirdPersonMovement : MonoBehaviour {
         if (newState != null) state.OnEnd();
         state = newState;
         state.OnBegin(this);
-        print(state);
+        
     }
+    
 
-    
-    
+
+
 
 }

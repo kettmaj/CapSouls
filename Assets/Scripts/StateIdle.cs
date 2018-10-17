@@ -10,7 +10,7 @@ public class StateIdle : PlayerState {
     /// </summary>
     override public PlayerState Update()
     {
-        Debug.Log("idle");
+        
 
         //put behavior here
 
